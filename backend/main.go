@@ -15,7 +15,7 @@ func main() {
 
 	r.GET("/api/message", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "Halo dari Go API 🚀",
+			"message": "Halo dari Go API ",
 		})
 	})
 
