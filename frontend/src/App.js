@@ -558,13 +558,13 @@ const Dashboard = () => {
             <Package style={{ 
               width: '64px', 
               height: '64px', 
-              color: '#cbd5e1', 
+              color: '#202124ff', 
               margin: '0 auto 24px' 
             }} />
             <h3 style={{ 
               fontSize: '24px', 
               fontWeight: '700', 
-              color: '#374151', 
+              color: '#575757ff', 
               margin: '0 0 12px 0' 
             }}>
               {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Page
