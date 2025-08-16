@@ -19,9 +19,9 @@ export default function Users() {
   // Add new user
   const handleAdd = (e) => {
     e.preventDefault();
-    if (!form.name || !form.email) return alert("Please fill all fields");
+    if (!form.name || !form.email || !form.role) return alert("Please fill all fields");
     setUsers([...users, { ...form, id: Date.now() }]);
-    setForm({ id: null, name: "", email: "", role: "", status: "Active" });
+    resetForm();
   };
 
   // Edit user
@@ -34,7 +34,7 @@ export default function Users() {
   const handleUpdate = (e) => {
     e.preventDefault();
     setUsers(users.map((u) => (u.id === form.id ? form : u)));
-    setForm({ id: null, name: "", email: "", role: "", status: "Active" });
+    resetForm();
     setIsEditing(false);
   };
 
@@ -45,6 +45,12 @@ export default function Users() {
     }
   };
 
+  // Reset form
+  const resetForm = () => {
+    setForm({ id: null, name: "", email: "", role: "", status: "Active" });
+    setIsEditing(false);
+  };
+
   return (
     <div className="dashboard-container">
       <Sidebar />
@@ -53,59 +59,64 @@ export default function Users() {
 
         {/* Form Create / Update */}
         <form className="user-form" onSubmit={isEditing ? handleUpdate : handleAdd}>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={form.name}
-            onChange={handleChange}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="role"
-            placeholder="Role"
-            value={form.role}
-            onChange={handleChange}
-          />
-          <select name="status" value={form.status} onChange={handleChange}>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </select>
-          <button type="submit">{isEditing ? "Update" : "Add"} User</button>
+          <div>
+            <label>Name:</label>
+            <input type="text" name="name" value={form.name} onChange={handleChange} />
+          </div>
+          <div>
+            <label>Email:</label>
+            <input type="email" name="email" value={form.email} onChange={handleChange} />
+          </div>
+          <div>
+            <label>Role:</label>
+            <input type="text" name="role" value={form.role} onChange={handleChange} />
+          </div>
+          <div>
+            <label>Status:</label>
+            <select name="status" value={form.status} onChange={handleChange}>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div style={{ marginTop: "10px" }}>
+            <button type="submit">{isEditing ? "Update" : "Add"} User</button>
+            {isEditing && (
+              <button type="button" onClick={resetForm} style={{ marginLeft: "5px", backgroundColor: "gray" }}>
+                Cancel
+              </button>
+            )}
+          </div>
         </form>
 
         {/* Table */}
-        <table className="data-table">
+        <table className="data-table" style={{ marginTop: "20px", borderCollapse: "collapse", width: "100%" }}>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th style={{ border: "1px solid #ccc", padding: "8px" }}>ID</th>
+              <th style={{ border: "1px solid #ccc", padding: "8px" }}>Name</th>
+              <th style={{ border: "1px solid #ccc", padding: "8px" }}>Email</th>
+              <th style={{ border: "1px solid #ccc", padding: "8px" }}>Role</th>
+              <th style={{ border: "1px solid #ccc", padding: "8px" }}>Status</th>
+              <th style={{ border: "1px solid #ccc", padding: "8px" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td style={{ color: user.status === "Active" ? "green" : "red" }}>
+                <td style={{ border: "1px solid #ccc", padding: "8px" }}>{user.id}</td>
+                <td style={{ border: "1px solid #ccc", padding: "8px" }}>{user.name}</td>
+                <td style={{ border: "1px solid #ccc", padding: "8px" }}>{user.email}</td>
+                <td style={{ border: "1px solid #ccc", padding: "8px" }}>{user.role}</td>
+                <td style={{ border: "1px solid #ccc", padding: "8px", color: user.status === "Active" ? "green" : "red" }}>
                   {user.status}
                 </td>
-                <td>
+                <td style={{ border: "1px solid #ccc", padding: "8px" }}>
                   <button onClick={() => handleEdit(user)}>Edit</button>
-                  <button onClick={() => handleDelete(user.id)} style={{ marginLeft: "5px" }}>
+                  <button
+                    onClick={() => handleDelete(user.id)}
+                    style={{ marginLeft: "5px", backgroundColor: "red", color: "white" }}
+                  >
                     Delete
                   </button>
                 </td>
