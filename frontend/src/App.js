@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Reports from "./pages/Reports";
 import Users from "./pages/Users"; // ✅ import
 import Settings from "./pages/Settings";
+import Barangs from "./pages/barangs"; // ✅ import
 
 import "./App.css";
 
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/users" element={<Users />} /> {/* ✅ route baru */}
+        <Route path="/barangs" element={<Barangs />} /> {/* ✅ route baru */}
         <Route path="/settings" element={<Settings />} />
       </Routes>
     </Router>
